@@ -6,16 +6,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AsyncDemo
+namespace _3GettingResults
 {
     class Program
     {
         static void Main(string[] args)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            int cardID = BookCar();
-            int hotelID = BookHotel();
-            int planeID = BookPlane();
+
+            Task<int> carTask = Task.Factory.StartNew<int>(BookCar);
+            Task<int> hotelTask = Task.Factory.StartNew<int>(BookHotel);
+            Task<int> planeTask = Task.Factory.StartNew<int>(BookPlane);
+
+            //int cardID = BookCar();
+            //int hotelID = BookHotel();
+            //int planeID = BookPlane();
+
+            //Task.WaitAll(carTask, hotelTask, planeTask);
+
+            //Console.WriteLine("Finished booking:\n carId={0}, \nhotelId ={1}, \nplaneId={2}\n",carTask.Result,hotelTask.Result,planeTask.Result);
+            Console.WriteLine("Finished booking:\n carId={0}, \nhotelId ={1}\n", carTask.Result, hotelTask.Result);
+
 
             Console.WriteLine("Finished in {0} sec", sw.ElapsedMilliseconds / 1000.0);
             Console.ReadKey();
@@ -53,6 +64,6 @@ namespace AsyncDemo
 
 //Najważniejsze w tym przykładzie
 
-    ///1. Tworzenie zadania(Taska)
-    ///2. Oczekiwanie na wynik
-    ///3. Kontynnuj z wynikiem
+///1. Tworzenie zadania(Taska)
+///2. Oczekiwanie na wynik
+///3. Kontynnuj z wynikiem
